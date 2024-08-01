@@ -16,19 +16,22 @@ import Sura.ActivityMonitor;
 import Sura.BodyBattery;
 
 class MainWatchFace extends WatchUi.WatchFace {
-  var backgroundImage as WatchUi.Resource or Null = null;
   var battery as Battery;
   var bodyBatteryGraph as ArcGoalView;
   var heartRate as HeartRateView;
-  var iconDoNotDisturb as WatchUi.Resource = WatchUi.loadResource(Rez.Drawables.doNotDisturbIcon);
-  var iconMessageBadge as WatchUi.Resource = WatchUi.loadResource(Rez.Drawables.messageBadgeCustom);
+  var iconDoNotDisturb as WatchUi.Resource = WatchUi.loadResource(
+    Rez.Drawables.doNotDisturbIcon
+  );
+  var iconMessageBadge as WatchUi.Resource = WatchUi.loadResource(
+    Rez.Drawables.messageBadgeCustom
+  );
   var isDoNotDisturb as Boolean = false;
   var isLowPowerMode = false;
   var offsetX as Number = 50;
   var separatorYBottom as Number = 0;
   var separatorYTop as Number = 0;
   var stepGraph as ArcGoalView;
-  var temperatureUnits as System.UnitsSystem or Null = null;
+  var temperatureUnits as System.UnitsSystem? = null;
   var timeFontSize as Graphics.FontDefinition = Graphics.FONT_NUMBER_MEDIUM;
   var smallFont = Graphics.FONT_XTINY;
   var smallFontSize = Graphics.getFontHeight(smallFont);
@@ -43,7 +46,7 @@ class MainWatchFace extends WatchUi.WatchFace {
       :direction => Graphics.ARC_COUNTER_CLOCKWISE,
       :position => "bottom",
     });
-  
+
     self.bodyBatteryGraph = new ArcGoalView({
       :direction => Graphics.ARC_CLOCKWISE,
       :color => Graphics.COLOR_DK_BLUE,
@@ -58,8 +61,12 @@ class MainWatchFace extends WatchUi.WatchFace {
 
     self.offsetX = (smallFontSize * 2.8).toNumber();
 
-    self.separatorYTop = Device.screenCenter.x - (Graphics.getFontHeight(timeFontSize) / 2).toNumber();
-    self.separatorYBottom = Device.screenCenter.x + (Graphics.getFontHeight(timeFontSize) / 2).toNumber();
+    self.separatorYTop =
+      Device.screenCenter.x -
+      (Graphics.getFontHeight(timeFontSize) / 2).toNumber();
+    self.separatorYBottom =
+      Device.screenCenter.x +
+      (Graphics.getFontHeight(timeFontSize) / 2).toNumber();
 
     var arcGraphRadius = Device.screenCenter.getMin() - 8;
 
@@ -69,9 +76,14 @@ class MainWatchFace extends WatchUi.WatchFace {
       self.stepGraph.setIcon(WatchUi.loadResource(Rez.Drawables.stepIcon));
     }
 
-    self.bodyBatteryGraph.setPosition(Device.screenCenter.x, Device.screenCenter.x);
+    self.bodyBatteryGraph.setPosition(
+      Device.screenCenter.x,
+      Device.screenCenter.x
+    );
     self.bodyBatteryGraph.setRadius(arcGraphRadius);
-    self.bodyBatteryGraph.setIcon(WatchUi.loadResource(Rez.Drawables.bodyBatteryIcon));
+    self.bodyBatteryGraph.setIcon(
+      WatchUi.loadResource(Rez.Drawables.bodyBatteryIcon)
+    );
 
     self.heartRate.setPosition(
       self.offsetX,
@@ -82,12 +94,6 @@ class MainWatchFace extends WatchUi.WatchFace {
       (Device.screenCenter.x + smallFontSize).toNumber(),
       self.separatorYBottom + 12 + smallFontSize / 2
     );
-
-    self.backgroundImage = Device.isBackgroundImageSupported? WatchUi.loadResource(
-      Device.screenSize.getMin() > 416 ? Rez.Drawables.backgroundBig : Rez.Drawables.backgroundSmall
-    ) : null;
-
-    store.canDisplaySecond = Application.Properties.getValue(storeName.canDisplaySecond);
   }
 
   // Called when this View is brought to the foreground. Restore
@@ -105,13 +111,12 @@ class MainWatchFace extends WatchUi.WatchFace {
     Datetime.init();
     ActivityMonitor.init();
 
-
     var settings = System.getDeviceSettings();
     self.isDoNotDisturb = settings.doNotDisturb;
     self.temperatureUnits = settings.temperatureUnits;
-    
+
     self.clearScreen(dc);
-    self.drawBackgroundImage(dc);
+    self.drawBackground(dc);
     self.drawWeather(dc);
     self.drawTime(dc);
     self.drawDate(dc);
@@ -122,23 +127,41 @@ class MainWatchFace extends WatchUi.WatchFace {
       if (self.isDoNotDisturb) {
         dc.drawBitmap(
           Device.screenCenter.x - self.iconDoNotDisturb.getWidth() / 2,
-          self.separatorYTop - smallFontSize - 12 - self.iconDoNotDisturb.getHeight() - 6,
+          self.separatorYTop -
+            smallFontSize -
+            12 -
+            self.iconDoNotDisturb.getHeight() -
+            6,
           self.iconDoNotDisturb
         );
       } else if (settings.notificationCount > 0) {
         dc.drawBitmap(
           Device.screenCenter.x - self.iconMessageBadge.getWidth() / 2,
-          self.separatorYTop - smallFontSize - 12 - self.iconMessageBadge.getHeight() - 6,
+          self.separatorYTop -
+            smallFontSize -
+            12 -
+            self.iconMessageBadge.getHeight() -
+            6,
           self.iconMessageBadge
         );
       }
     }
 
     // Separators
-    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(store.foregroundColor, Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(2);
-    dc.drawLine(offsetX, self.separatorYTop, Device.screenSize.x, self.separatorYTop);
-    dc.drawLine(offsetX, self.separatorYBottom, Device.screenSize.x, self.separatorYBottom);
+    dc.drawLine(
+      offsetX,
+      self.separatorYTop,
+      Device.screenSize.x,
+      self.separatorYTop
+    );
+    dc.drawLine(
+      offsetX,
+      self.separatorYBottom,
+      Device.screenSize.x,
+      self.separatorYBottom
+    );
     dc.setPenWidth(1);
 
     if (!self.isLowPowerMode) {
@@ -168,8 +191,50 @@ class MainWatchFace extends WatchUi.WatchFace {
     dc.clear();
   }
 
-  function drawBackgroundImage(dc as Dc) as Void {
-    if (self.backgroundImage != null && !self.isLowPowerMode) {
+  function drawBackground(dc as Dc) as Void {
+    // None
+    if (self.isLowPowerMode || store.background == store.BackgroundType.None) {
+      return;
+    }
+
+    // Solid
+    if (
+      store.background == store.BackgroundType.Solid ||
+      (store.background == store.BackgroundType.Gradient && self.isLowPowerMode)
+    ) {
+      dc.setColor(store.backgroundGradientInner, Graphics.COLOR_TRANSPARENT);
+      dc.fillCircle(Device.screenCenter.x, Device.screenCenter.y, Device.screenSize.x / 2);
+    }
+
+    // Gradient
+    if (store.background == store.BackgroundType.Gradient) {
+      var r = Device.screenSize.x / 2;
+      var gradient = new Colors.Gradient(
+        new Colors.rgb(store.backgroundGradientOuter),
+        new Colors.rgb(store.backgroundGradientInner),
+        r
+      );
+      Colors.drawCurvedGradient(
+        dc,
+        Device.screenCenter.x,
+        Device.screenCenter.y,
+        r,
+        gradient
+      );
+    }
+
+    // Image
+    if (
+      store.background == store.BackgroundType.Image &&
+      !self.isLowPowerMode &&
+      Device.isBackgroundImageSupported
+    ) {
+      var backgroundImage = WatchUi.loadResource(
+        Device.screenSize.getMin() > 416
+          ? Rez.Drawables.backgroundBig
+          : Rez.Drawables.backgroundSmall
+      );
+
       var imageWidth = backgroundImage.getWidth();
       var imageHeight = backgroundImage.getHeight();
 
@@ -179,7 +244,7 @@ class MainWatchFace extends WatchUi.WatchFace {
       var x = centerX - imageWidth / 2;
       var y = centerY - imageHeight / 2;
 
-      dc.drawBitmap(x, y, self.backgroundImage);
+      dc.drawBitmap(x, y, backgroundImage);
     }
   }
 
@@ -187,21 +252,33 @@ class MainWatchFace extends WatchUi.WatchFace {
     var weatherIcon = Weather.getWeatherIcon(Sun.getIsNight());
     var x = Device.screenCenter.x - offsetX * 0.5;
     var y = 40;
-    var temperatureText = Weather.getTemperatureAndPrecipitationChanceInfo(self.temperatureUnits);
+    var temperatureText = Weather.getTemperatureAndPrecipitationChanceInfo(
+      self.temperatureUnits
+    );
 
-    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(store.foregroundColor, Graphics.COLOR_TRANSPARENT);
 
     if (weatherIcon != null) {
-      dc.drawBitmap(x - weatherIcon.getWidth(), y - weatherIcon.getHeight() / 2, weatherIcon);
+      dc.drawBitmap(
+        x - weatherIcon.getWidth(),
+        y - weatherIcon.getHeight() / 2,
+        weatherIcon
+      );
     }
 
-    dc.drawText(x, y - smallFontSize / 2, smallFont, temperatureText, Graphics.TEXT_JUSTIFY_LEFT);
+    dc.drawText(
+      x,
+      y - smallFontSize / 2,
+      smallFont,
+      temperatureText,
+      Graphics.TEXT_JUSTIFY_LEFT
+    );
   }
 
   function drawDate(dc as Dc) as Void {
     var textAlign = Graphics.TEXT_JUSTIFY_CENTER;
 
-    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(store.foregroundColor, Graphics.COLOR_TRANSPARENT);
     dc.drawText(
       Device.screenCenter.x,
       self.separatorYTop - smallFontSize - 12,
@@ -229,11 +306,12 @@ class MainWatchFace extends WatchUi.WatchFace {
     var textAlign = Graphics.TEXT_JUSTIFY_VCENTER;
     var timeFontSize = self.getTimeFontSize();
 
-    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-    
+    dc.setColor(store.foregroundColor, Graphics.COLOR_TRANSPARENT);
+
     // Time
     dc.drawText(
-      Device.screenSize.x - offsetX * (timeFontSize == Graphics.FONT_NUMBER_HOT ? 0.42 : 0.75),
+      Device.screenSize.x -
+        offsetX * (timeFontSize == Graphics.FONT_NUMBER_HOT ? 0.42 : 0.75),
       Device.screenCenter.y,
       timeFontSize,
       Datetime.getTimeText(),
