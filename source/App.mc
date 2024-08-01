@@ -14,8 +14,14 @@ class App extends Application.AppBase {
     }
 
     // Return the initial view of your application here
-    function getInitialView() as Array<Views or InputDelegates>? {
-      return [new MainWatchFace(), new Delegate()] as Array<Views or InputDelegates> ;
+    function getInitialView() as [Views] or [Views, InputDelegates] {
+      store.init();
+      return [new MainWatchFace(), new Delegate()] as [Views, InputDelegates];
+    }
+
+    function onSettingsChanged() { // triggered by settings change in GCM
+      store.init();
+      WatchUi.requestUpdate();   // update the view to reflect changes
     }
 }
 

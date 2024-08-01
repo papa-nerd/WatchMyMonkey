@@ -8,8 +8,8 @@ class Delegate extends WatchUi.WatchFaceDelegate {
     WatchFaceDelegate.initialize();
   }
   function onPress(powerInfo) {
-    store.canDisplaySecond = !Application.Properties.getValue(storeName.canDisplaySecond);
-    Application.Properties.setValue(storeName.canDisplaySecond, store.canDisplaySecond);
+    store.canDisplaySecond = !store.canDisplaySecond;
+    Application.Properties.setValue("canDisplaySecond", store.canDisplaySecond);
 
     return true;
   }

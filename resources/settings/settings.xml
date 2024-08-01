@@ -1,5 +1,33 @@
 <settings>
-  <setting propertyKey="@Properties.canDisplaySecond" title="display seconds">
-    <settingConfig type="boolean"></settingConfig>
-  </setting>
+  <group id="general" title="General" description="Display settings">
+    <!--  -->
+    <setting propertyKey="@Properties.dateFormat" title="Display date dormat" prompt="DateTime format, available variables are ['yyyy', 'mmm', 'ddd'] for text-based-dates, ['mm', 'dd', 'm', 'd'] for numeric-based-dates, with or without leading zero.">
+      <settingConfig type="alphaNumeric" maxLength="32"></settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.hourLeadingZero" title="Display the hour with a leading zero">
+      <settingConfig type="boolean"></settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.canDisplaySecond" title="Display seconds">
+      <settingConfig type="boolean"></settingConfig>
+    </setting> 
+    <setting propertyKey="@Properties.foregroundColor" title="Foreground color" prompt="hex foreground color">
+      <settingConfig type="alphaNumeric" maxLength="8"></settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.background" title="Background">
+      <settingConfig type="list">
+          <listEntry value="0">None</listEntry>
+          <listEntry value="1">Solid</listEntry>
+          <listEntry value="2">Gradient</listEntry>
+          <listEntry value="3">Image</listEntry>
+      </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.backgroundGradientInner" title="Background color" prompt="hex background color">
+      <settingConfig type="alphaNumeric" maxLength="8"></settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.backgroundGradientOuter" title="Background outer color (gradient)" prompt="hex outer color">
+      <settingConfig type="alphaNumeric" maxLength="8"></settingConfig>
+    </setting>
+  </group>
 </settings>

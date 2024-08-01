@@ -8,7 +8,7 @@ class ArcGoalGraphView extends BaseView {
   var value as Number = 0;
   var goal as Number = 1;
   var color as Graphics.ColorValue = Graphics.COLOR_BLUE;
-  var backgroundColor as Graphics.ColorValue = Graphics.COLOR_LT_GRAY;
+  var backgroundColor as Number = store.foregroundColor;
   var direction as Graphics.ArcDirection = Graphics.ARC_CLOCKWISE;
   var radius as Number = 20;
   var position as String = "bottom";

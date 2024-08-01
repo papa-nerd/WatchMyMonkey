@@ -4,7 +4,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 class ArcGoalView extends ArcGoalGraphView {
-  var textColor as Graphics.ColorValue = Graphics.COLOR_LT_GRAY;
+  var textColor as Number = store.foregroundColor;
   var text as String = "";
   var icon as WatchUi.Resource or Null = null;
   var font = Graphics.FONT_XTINY;
@@ -13,7 +13,7 @@ class ArcGoalView extends ArcGoalGraphView {
   function initialize(params as {
     :value as Number?,
     :goal as Number?,
-    :color as Graphics.ColorValue?,
+    :color as Number?,
     :backgroundColor as Graphics.ColorValue?,
     :direction as Graphics.ArcDirection?,
     :radius as Number?,

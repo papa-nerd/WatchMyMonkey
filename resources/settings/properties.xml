@@ -1,5 +1,12 @@
 <resources>
   <properties>
+    <property id="dateFormat" type="string">ddd d mmm yyyy</property>
+    <property id="hourLeadingZero" type="boolean">true</property>
     <property id="canDisplaySecond" type="boolean">true</property>
+
+    <property id="foregroundColor" type="string">AAAAAA</property>
+    <property id="background" type="number">2</property>
+    <property id="backgroundGradientInner" type="string">393C41</property>
+    <property id="backgroundGradientOuter" type="string">080C10</property>
   </properties>
 </resources>

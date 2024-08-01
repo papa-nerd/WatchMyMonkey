@@ -39,7 +39,7 @@ class Battery extends BaseView {
     dc.fillRectangle(self.x, self.y - self.height / 2, (self.width * battery / 100), self.height);
 
     // frame
-    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(store.foregroundColor, Graphics.COLOR_TRANSPARENT);
     dc.drawRectangle(self.x, self.y - self.height / 2, self.width, self.height);
 
     // batteryHead
@@ -49,7 +49,7 @@ class Battery extends BaseView {
     }
 
     // BatteryHead Frame
-    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(store.foregroundColor, Graphics.COLOR_TRANSPARENT);
     dc.drawRectangle(batteryHeadX, batteryHeadY, batteryHeadWidth, batteryHeadHeight);
 
     dc.drawText(
