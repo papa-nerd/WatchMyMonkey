@@ -1,6 +1,6 @@
 # WatchMyMonkey - WatchFace
 
-An adapted more configurable versions of [SuccessCircle](https://github.com/sura0111/GarminWatchFaceSuccessCircle){:target="_blank"}, see original screenshots below.
+An adapted more configurable versions of [SuccessCircle](https://github.com/sura0111/GarminWatchFaceSuccessCircle), see original screenshots below.
 
 ## Added Features
 - Support for the Forerunner 165
@@ -16,7 +16,12 @@ An adapted more configurable versions of [SuccessCircle](https://github.com/sura
 TODO
 
 ### Support
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/papanerd){:target="_blank"}
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/papanerd)
+
+## Screenshots
+
+### Forerunner 165
+![cover](./docs/fr165-yellow.png)
 
 ## Original screenshots
 

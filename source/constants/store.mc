@@ -22,13 +22,13 @@ module store {
   var backgroundGradientOuter as Number or Null  = 0x080C10;
 
   function init(){
-    dateFormat = Toybox.Application.Properties.getValue("dateFormat");
-    hourLeadingZero = Toybox.Application.Properties.getValue("hourLeadingZero");
-    canDisplaySecond = Toybox.Application.Properties.getValue("canDisplaySecond");
+    dateFormat = Toybox.Application.getApp().getProperty("dateFormat");
+    hourLeadingZero = Toybox.Application.getApp().getProperty("hourLeadingZero");
+    canDisplaySecond = Toybox.Application.getApp().getProperty("canDisplaySecond");
 
-    foregroundColor = Toybox.Application.Properties.getValue("foregroundColor").toNumberWithBase(16);
-    background = Toybox.Application.Properties.getValue("background");
-    backgroundGradientInner = background!=BackgroundType.None && background!=BackgroundType.Image ? Toybox.Application.Properties.getValue("backgroundGradientInner").toNumberWithBase(16) : null;
-    backgroundGradientOuter = background==BackgroundType.Gradient ? Toybox.Application.Properties.getValue("backgroundGradientOuter").toNumberWithBase(16) : null;
+    foregroundColor = Toybox.Application.getApp().getProperty("foregroundColor").toNumberWithBase(16);
+    background = Toybox.Application.getApp().getProperty("background");
+    backgroundGradientInner = background!=BackgroundType.None && background!=BackgroundType.Image ? Toybox.Application.getApp().getProperty("backgroundGradientInner").toNumberWithBase(16) : null;
+    backgroundGradientOuter = background==BackgroundType.Gradient ? Toybox.Application.getApp().getProperty("backgroundGradientOuter").toNumberWithBase(16) : null;
   }
 }
